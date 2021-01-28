@@ -1,7 +1,7 @@
 const discord = require('discord.js');
 module.exports = {
     info: {
-        Name: "ping",
+        name: "ping",
         description: "To see the bot latency",
         usage: "[ping]",
         aliases: ["pg"],
