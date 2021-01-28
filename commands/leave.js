@@ -1,5 +1,4 @@
-const { MessageEmbed } = require("discord.js");
-const sendError = require("../util/error");
+const discord = require("discord.js");
 
 module.exports = {
     info: {
@@ -10,11 +9,15 @@ module.exports = {
     },
 
     run: async function (client, message, args) {
+        let embed = new discord.MessageEmbed()
+        .setDescription("Goodbye!")
+        .setColor("YELLOW")
+        .setFooter(`Requested by ${message.author.username}`)
         const voiceChannel = message.member.voice.channel;
 
         if (!voiceChannel) return message.channel.send("You need to be in a voice channel");
 
         await voiceChannel.leave();
-        await message.channel.send('Leaving the voice channel :smiling_face_with_tear:');
+        await message.channel.send(embed);
     }
 }
