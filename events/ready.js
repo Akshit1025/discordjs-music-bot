@@ -1,6 +1,4 @@
 module.exports = async (client) => {
-  console.log(`[API] Logged in as ${client.user.username}`);
-
   let statuses = [
     "mhelp",
     "Music"
@@ -12,4 +10,6 @@ module.exports = async (client) => {
       type: "LISTENING",
     });
   }, 1000);
+
+  console.log(`[API] Logged in as ${client.user.username}`);
 };
