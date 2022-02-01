@@ -1,23 +1,41 @@
-const discord = require("discord.js");
+const { MessageEmbed } = require("discord.js");
 
 module.exports = {
-    info: {
-        name: "leave",
-        description: "Leaves the voice channel of the messenger",
-        usage: "[leave]",
-        aliases: ["l"],
+    name: "leave",
+    description: "To leave the voice channel",
+    usage: "",
+    permissions: {
+        channel: ["VIEW_CHANNEL", "SEND_MESSAGES", "EMBED_LINKS"],
+        member: [],
+    },
+    aliases: ["stop", "exit", "quit", "dc", "disconnect"],
+    /**
+     *
+     * @param {import("../structures/DiscordMusicBot")} client
+     * @param {import("discord.js").Message} message
+     * @param {string[]} args
+     * @param {*} param3
+     */
+    run: async (client, message, args, { GuildDB }) => {
+        let player = await client.Manager.get(message.guild.id);
+        if (!player) return client.sendTime(message.channel, "❌ | **Nothing is playing right now...**");
+        await message.channel.send(":notes: | **The player has stopped and the queue has been cleared.**");
+        await message.react("✅");
+        player.destroy();
     },
 
-    run: async function (client, message, args) {
-        let embed = new discord.MessageEmbed()
-        .setDescription("Goodbye!")
-        .setColor("YELLOW")
-        .setFooter(`Requested by ${message.author.username}`)
-        const voiceChannel = message.member.voice.channel;
+    SlashCommand: {
+        run: async (client, interaction, args, { GuildDB }) => {
+            const guild = client.guilds.cache.get(interaction.guild_id);
+            const member = guild.members.cache.get(interaction.member.user.id);
 
-        if (!voiceChannel) return message.channel.send("You need to be in a voice channel");
+            if (!member.voice.channel) return interaction.send("❌ | You must be on a voice channel.");
+            if (guild.me.voice.channel && !guild.me.voice.channel.equals(member.voice.channel)) return interaction.send(`❌ | You must be on ${guild.me.voice.channel} to use this command.`);
 
-        await voiceChannel.leave();
-        await message.channel.send(embed);
-    }
-}
+            let player = await client.Manager.get(interaction.guild_id);
+            if (!player) return interaction.send("❌ | **Nothing is playing right now...**");
+            player.destroy();
+            interaction.send(":notes: | **The player has stopped and the queue has been cleared.**");
+        },
+    },
+};

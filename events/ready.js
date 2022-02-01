@@ -1,15 +1,7 @@
 module.exports = async (client) => {
-  let statuses = [
-    "mhelp",
-    "Music"
-  ]
-
-  setInterval(function() {
-    let status = statuses[Math.floor(Math.random() * statuses.length)];
-    client.user.setActivity(status, {
-      type: "LISTENING",
-    });
-  }, 1000);
-
-  console.log(`[API] Logged in as ${client.user.username}`);
+  client.Ready = true;
+  client.user.setActivity("Music", { type: "LISTENING" }).then(() => {
+    client.Manager.init(client.user.id);
+    client.log("Successfully Logged in as " + client.user.tag);
+  });
 };
