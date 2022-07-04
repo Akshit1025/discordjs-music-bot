@@ -154,7 +154,7 @@ class DiscordMusicBot extends Client {
           .setColor("RANDOM")
           .setTimestamp()
         client.channels.cache.get(player.textChannel).send(QueueEmbed);
-        player.destroy();
+        if(!this.config["24/7"])player.destroy();
       });
   }
 
@@ -225,7 +225,13 @@ class DiscordMusicBot extends Client {
 
   build() {
     this.login(this.config.Token);
-    this.http.listen(this.config.Port, () => this.log("Web Server has been started"));
+    this.http.listen(process.env.PORT || this.config.Port, () => this.log("Web Server has been started"));
+  }
+
+  RegisterSlashCommands(){
+    this.guilds.cache.forEach(guild => {
+      require("../util/RegisterSlashCommands")(this, guild.id)
+    })
   }
 }
 

@@ -3,7 +3,7 @@ const { TrackUtils } = require("erela.js");
 
 module.exports = {
     name: "seek",
-    description: "To seek the current song",
+    description: "Seek to a position in the song",
     usage: "<time s/m/h>",
     permissions: {
         channel: ["VIEW_CHANNEL", "SEND_MESSAGES", "EMBED_LINKS"],
@@ -20,6 +20,7 @@ module.exports = {
     run: async (client, message, args, { GuildDB }) => {
         let player = await client.Manager.get(message.guild.id);
         if (!player) return client.sendTime(message.channel, "❌ | **Nothing is playing right now...**");
+        if (!message.member.voice.channel) return client.sendTime(message.channel, "❌ | **You must be in a voice channel to use this command!**");
         if (!player.queue.current.isSeekable) return message.channel.send("This song is not able to seek from.");
         let SeekTo = client.ParseHumanTime(args.join(" "));
         if (!SeekTo) return message.channel.send("Please enter a time to seek!");
@@ -40,8 +41,8 @@ module.exports = {
                     const guild = client.guilds.cache.get(interaction.guild_id);
                     const member = guild.members.cache.get(interaction.member.user.id);
 
-                    if (!member.voice.channel) return interaction.send("❌ | You must be on a voice channel.");
-                    if (guild.me.voice.channel && !guild.me.voice.channel.equals(member.voice.channel)) return interaction.send(`❌ | You must be on ${guild.me.voice.channel} to use this command.`);
+                    if (!member.voice.channel) return client.sendTime(interaction, "❌ | **You must be in a voice channel to use this command.**");
+                    if (guild.me.voice.channel && !guild.me.voice.channel.equals(member.voice.channel)) return client.sendTime(interaction, `❌ | **You must be in ${guild.me.voice.channel} to use this command.**`);
 
                     let player = await client.Manager.get(interaction.guild_id);
                     if (!player) return interaction.send("❌ | **Nothing is playing right now...**");

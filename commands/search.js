@@ -11,7 +11,7 @@ module.exports = {
         channel: ["VIEW_CHANNEL", "SEND_MESSAGES", "EMBED_LINKS"],
         member: [],
     },
-    aliases: [],
+    aliases: ["se"],
     /**
      *
      * @param {import("../structures/DiscordMusicBot")} client
@@ -20,13 +20,15 @@ module.exports = {
      * @param {*} param3
      */
     run: async (client, message, args, { GuildDB }) => {
-        if (!message.member.voice.channel) return client.sendTime(message.channel, "❌  | **You must be in a voice channel to play something!**");
+        if (!message.member.voice.channel) return client.sendTime(message.channel, "❌ | **You must be in a voice channel to play something!**");
+        //else if(message.guild.me.voice && message.guild.me.voice.channel.id !== message.member.voice.channel.id)return client.sendTime(message.channel, "❌ | **You must be in same voice channel as the bot is in to play something!**");
 
         let SearchString = args.join(" ");
         if (!SearchString) return client.sendTime(message.channel, `**Usage - **\`${GuildDB.prefix}search [Song Name|SongURL]\``);
-
-        let Searching = await message.channel.send(":mag_right: Searching...");
-
+        let CheckNode = client.Manager.nodes.get(client.config.Lavalink.id);
+        if (!CheckNode || !CheckNode.connected) {
+       return client.sendTime(message.channel,"❌ | Lavalink node not connected.");
+        }
         const player = client.Manager.create({
             guild: message.guild.id,
             voiceChannel: message.member.voice.channel.id,
@@ -92,8 +94,8 @@ module.exports = {
     SlashCommand: {
         options: [
             {
-                name: "Song Name|Song URL",
-                value: "[Song Name|Song URL]",
+                name: "song",
+                value: "song",
                 type: 3,
                 required: true,
                 description: "Search a song/playlist",
@@ -111,9 +113,12 @@ module.exports = {
             const member = guild.members.cache.get(interaction.member.user.id);
             const voiceChannel = member.voice.channel;
             let awaitchannel = client.channels.cache.get(interaction.channel_id); /// thanks Reyansh for this idea ;-;
-            if (!member.voice.channel) return interaction.send("❌ | You must be on a voice channel.");
-            if (guild.me.voice.channel && !guild.me.voice.channel.equals(member.voice.channel)) return interaction.send(`❌ | You must be on ${guild.me.voice.channel} to use this command.`);
-
+            if (!member.voice.channel) return client.sendTime(interaction, "❌ | **You must be in a voice channel to use this command.**");
+            if (guild.me.voice.channel && !guild.me.voice.channel.equals(member.voice.channel)) return client.sendTime(interaction, `❌ | **You must be in ${guild.me.voice.channel} to use this command.**`);
+            let CheckNode = client.Manager.nodes.get(client.config.Lavalink.id);
+            if (!CheckNode || !CheckNode.connected) {
+              return client.sendTime(interaction,"❌ | Lavalink node not connected.");
+            }
             let player = client.Manager.create({
                 guild: interaction.guild_id,
                 voiceChannel: voiceChannel.id,
