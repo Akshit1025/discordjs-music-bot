@@ -3,6 +3,7 @@ const colors = require("colors");
 const enmap = require("enmap");
 const fs = require("fs");
 const config = require("./botconfig/config.json");
+require("dotenv").config();
 
 const client = new Discord.Client({
   fetchAllMembers: false,

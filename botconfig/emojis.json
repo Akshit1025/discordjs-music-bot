@@ -16,12 +16,12 @@
         "line": "▬",
   
                    "___comment___" : "those are for the complex style",
-        "empty_left": "<:left_empty:909415753265086504>",
-        "filled_left": "<:left_filled:909415753692897300>",
-        "empty_right": "<:right_empty:909415753416056832>", 
-        "filled_right": "<:right_filled:909415753135042562>", 
-        "emptyframe": "<:middle_empty:909415753059545139>",
-        "filledframe": "<:middle_filled:909415753462218792>"
+        "empty_left": "<:left_empty:1055228397724368987>",
+        "filled_left": "<:left_filled:1055229261264470128>",
+        "empty_right": "<:right_empty:1055229967924989982>", 
+        "filled_right": "<:right_filled:1055230050619887696>", 
+        "emptyframe": "<:middle_empty:1055232498759630920>",
+        "filledframe": "<:middle_filled:1055232602849685564>"
       },
       "playing": "🎶",
       "pruning": "💬",
@@ -55,9 +55,9 @@
       "shuffle": "🔀",
       "show_queue": "📑",
       "show_current_track": "🩸",
-      "youtube": "<:Youtube:840260133686870036>",
-      "soundcloud": "<:soundcloud:825095625884434462>",
-      "spotify": "<:Spotify:846090652231663647>",
+      "youtube": "<:youtube:1050726960172638249>",
+      "soundcloud": "<:soundcloud:1055233067075244033>",
+      "spotify": "<:spotify:1055233276610084904>",
       "apple": "🍏"
     },
     "react": {
@@ -90,9 +90,9 @@
       "show_current_track": "🩸",
       "queue_clear": "💥",
   
-      "youtube": "840260133686870036",
-      "soundcloud": "840260133686870036",
-      "spotify": "846090652231663647"
+      "youtube": "1050726960172638249",
+      "soundcloud": "1055233067075244033",
+      "spotify": "1055233276610084904"
     }
   
   }

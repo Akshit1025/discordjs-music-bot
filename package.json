@@ -6,6 +6,7 @@
     "colors": "^1.4.0",
     "cpu-stat": "^2.0.1",
     "discord.js": "^13.5.0",
+    "dotenv": "^16.0.3",
     "enmap": "^5.8.7",
     "erela.js": "^2.3.3",
     "erela.js-apple": "^1.2.6",
@@ -17,8 +18,8 @@
     "nodemon": "^2.0.20",
     "radio-browser": "^2.1.9"
   },
-  "name": "discord-js-lavalink-music-bot-erela-js-lava-music",
-  "version": "8.0.0",
+  "name": "discordjs-music-bot",
+  "version": "5.0.0",
   "description": "An advanced Discord.js Music Bot, which connects via Lavalink and erela.js! Including Slash-Commands and a BUTTON-BASED-REQUEST-SYSTEM",
   "main": "index.js",
   "scripts": {
